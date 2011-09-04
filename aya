@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if [ $# -le 1 ]
+then
+    echo "Usage: $0 [HOST] [COMMAND]"
+    exit 1
+fi
+
+WD=`pwd`
+ROOT=$WD
+while [ ! -f "$ROOT/.aya" ]
+do
+  if [ "$ROOT" = "/" ]
+  then
+      echo "Error: no .aya found in any parent directory of $WD."
+      exit 1
+  fi
+
+  ROOT=`dirname $ROOT`
+done
+
+WHERE=$1
+shift
+WHAT=$*
+RELATIVE_WD=${WD:${#ROOT}}
+
+cd $ROOT
+CMD="LPATH=\`mktemp -d -t\` && \
+cd \"\$LPATH\" && \
+tar zxf - && \
+cd \"./$RELATIVE_WD\" && \
+$WHAT"
+tar czfh - -X "$ROOT/.aya" . | ssh "$WHERE" "$CMD"

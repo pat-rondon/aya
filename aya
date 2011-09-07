@@ -27,7 +27,7 @@ RELATIVE_WD=${WD:${#ROOT}}
 cd $ROOT
 CMD="LPATH=\`mktemp -d -t\` && \
 cd \"\$LPATH\" && \
-tar zxf - && \
+tar zx && \
 cd \"./$RELATIVE_WD\" && \
 $WHAT"
-tar czfh - -X "$ROOT/.aya" . | ssh "$WHERE" "$CMD"
+tar czh -X "$ROOT/.aya" . | ssh "$WHERE" "$CMD"

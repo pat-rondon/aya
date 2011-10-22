@@ -35,8 +35,8 @@ Then, in /home/user/proj/src/, execute
 
 Aya will copy all the files in /home/user/proj, except any files
 ending in .o, to the directory /tmp/proj on beefymachine and execute
-tmp/src/regressiontest.py on beefymachine in the working directory
-tmp/src.
+/tmp/proj/src/regressiontest.py on beefymachine in the working
+directory /tmp/proj/src.
 
 Aya uses rsync to do the copying so that repeated executions should
 be quite fast if little data have changed.
